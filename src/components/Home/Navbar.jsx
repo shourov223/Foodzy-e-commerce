@@ -1,0 +1,62 @@
+import Image from 'next/image'
+import { IoMdSearch } from "react-icons/io";
+import { IoPersonOutline } from "react-icons/io5";
+import { FaRegHeart } from "react-icons/fa";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import mainLogo from "../../assets/mainLogo.svg"
+
+const Navbar = () => {
+    return (
+        <nav className='py-3 sm:py-4 lg:py-5'>
+            <div className="container">
+                <div className='flex flex-col lg:flex-row items-center justify-between gap-y-3 sm:gap-y-4'>
+                    <div className='flex flex-col lg:flex-row items-center gap-3 sm:gap-4 lg:gap-6 w-full lg:w-auto'>
+                        <div className='flex items-center gap-2 sm:gap-3 flex-shrink-0'>
+                            <Image
+                                src={mainLogo}
+                                alt='Foodzy logo'
+                                width={40}
+                                height={40}
+                                className='sm:w-[45px] sm:h-[45px] lg:w-[50px] lg:h-[50px]'
+                            />
+                            <div className='flex flex-col'>
+                                <p className='text-lg sm:text-xl font-black tracking-wide'>Foodzy</p>
+                                <p className='text-xs text-gray-500 hidden sm:block'>A Treasure of Tastes</p>
+                            </div>
+                        </div>
+                        <div className='flex w-full sm:w-[350px] md:w-[400px] lg:w-[500px] xl:w-[600px] max-w-2xl'>
+                            <input
+                                className='flex-grow border border-[#64B496] rounded-l-md px-3 sm:px-4 py-2 outline-none text-sm placeholder:text-gray-500 placeholder:text-xs sm:placeholder:text-sm'
+                                type="text"
+                                placeholder='Search for items...'
+                            />
+                            <button
+                                className='px-3 sm:px-4 py-2 bg-[#F53E32] rounded-r-md hover:bg-[#e63529] transition-colors duration-200'
+                                aria-label='Search'
+                            >
+                                <IoMdSearch className='text-white text-lg sm:text-xl' />
+                            </button>
+                        </div>
+                    </div>
+                    <div className='flex items-center gap-3 sm:gap-4 lg:gap-6'>
+
+                        <div className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200'>
+                            <IoPersonOutline className='text-lg sm:text-xl' />
+                            <p className='text-xs sm:text-sm font-medium'>Account</p>
+                        </div>
+                        <div className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#F53E32] transition-colors duration-200'>
+                            <FaRegHeart className='text-lg sm:text-xl' />
+                            <p className='text-xs sm:text-sm font-medium'>Wishlist</p>
+                        </div>
+                        <div className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200 relative'>
+                            <MdOutlineShoppingCart className='text-lg sm:text-xl' />
+                            <p className='text-xs sm:text-sm font-medium'>Cart</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    )
+}
+
+export default Navbar
