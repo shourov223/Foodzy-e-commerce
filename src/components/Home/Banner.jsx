@@ -24,7 +24,7 @@ const Banner = () => {
     return (
         <section className="banner_image pt-16 pb-16 md:pt-32 md:pb-28 lg:pt-[268px] lg:pb-[229px]">
             <div className="container">
-                <div className="grid grid-cols-1 lg:grid-cols-[550px_1fr] gap-8 lg:gap-10 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-[550px_1fr] gap-2 items-center">
                     <div className="text-center lg:text-left">
                         <p className="text-base md:text-lg lg:text-xl text-white leading-relaxed tracking-wide pb-4">
                             <span className="text-[#F53E32] underline">100%</span> Organic Vegetables
