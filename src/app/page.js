@@ -1,5 +1,7 @@
 import Banner from "@/components/Home/Banner";
 import Deals from "@/components/Home/Deals";
+import Facilities from "@/components/Home/Facilities";
+import Footer from "@/components/Home/Footer";
 import Navbar from "@/components/Home/Navbar";
 import OurShop from "@/components/Home/ourShop";
 import Popular_product from "@/components/Home/Popular_product";
@@ -16,6 +18,8 @@ export default function Home() {
       <Deals />
       <TopSellings />
       <OurShop />
+      <Facilities />
+      <Footer />
     </>
   );
 }
