@@ -1,8 +1,12 @@
 import Image from "next/image"
 import { FaOpencart, FaStar } from "react-icons/fa"
+import { useDispatch } from "react-redux"
+import { addToCart } from "@/features/cartSlice"
 
 
 const Product_card = ({ image, title, ratings, price, oldPrice }) => {
+    const disPatch = useDispatch()
+
     return (
         <div className="border border-[#ECECEC] rounded-[15px] pb-[29px]">
             <div>
@@ -19,7 +23,7 @@ const Product_card = ({ image, title, ratings, price, oldPrice }) => {
                         <p className="font-bold text-[18px] leading-[24px] text-[#3BB77E]">${price}</p>
                         <del className="font-bold text-[14px] leading-[24px] text-[#ADADAD]">${oldPrice}</del>
                     </div>
-                    <button className="bg-[#F53E32] py-[13px] px-[20px] rounded-[4px] text-white text-[14px] font-bold leading-[24px] flex items-center gap-1 cursor-pointer">
+                    <button onClick={() => disPatch(addToCart({ image, title, ratings, price }))} className="bg-[#F53E32] py-[13px] px-[20px] rounded-[4px] text-white text-[14px] font-bold leading-[24px] flex items-center gap-1 cursor-pointer">
                         <FaOpencart className="text-white" />
                         Add
                     </button>

@@ -1,11 +1,18 @@
+"use client"
 import Image from 'next/image'
 import { IoMdSearch } from "react-icons/io";
 import { IoPersonOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import mainLogo from "../../assets/mainLogo.svg"
+import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 const Navbar = () => {
+    const { item } = useSelector((state) => state.cart)
+    console.log(item);
+    
+
     return (
         <nav className='py-3 sm:py-4 lg:py-5'>
             <div className="container">
@@ -48,10 +55,11 @@ const Navbar = () => {
                             <FaRegHeart className='text-lg sm:text-xl' />
                             <p className='text-xs sm:text-sm font-medium'>Wishlist</p>
                         </div>
-                        <div className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200 relative'>
+                        <Link href={"/cart"} className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200 relative'>
                             <MdOutlineShoppingCart className='text-lg sm:text-xl' />
                             <p className='text-xs sm:text-sm font-medium'>Cart</p>
-                        </div>
+                            <span>{item.length}</span>
+                        </Link>
                     </div>
                 </div>
             </div>
