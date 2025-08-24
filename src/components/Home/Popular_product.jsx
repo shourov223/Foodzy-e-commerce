@@ -5,7 +5,7 @@ import { productContext } from "@/context/productContext"
 
 const PopularProducts = () => {
     const { error, loading, products } = useContext(productContext);
-    
+
     if (loading) {
         return (
             <section className="py-8">
@@ -38,14 +38,11 @@ const PopularProducts = () => {
                 </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 lg:gap-[25px]">
-                    {products.slice(0, 10).map((product) => (
-                        <div key={product.id} className="w-full">
+                    {products.slice(0, 10).map((item) => (
+                        <div key={item.id} className="w-full">
                             <Product_card
-                                image={product.thumbnail}
-                                title={product.title}
-                                ratings={product.rating}
-                                price={product.price}
-                                oldPrice={product.discountPercentage}
+                                product={item}
+                                key={item.id}
                             />
                         </div>
                     ))}

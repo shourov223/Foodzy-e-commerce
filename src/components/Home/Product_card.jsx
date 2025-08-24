@@ -4,13 +4,14 @@ import { useDispatch } from "react-redux"
 import { addToCart } from "@/features/cartSlice"
 
 
-const Product_card = ({ image, title, ratings, price, oldPrice }) => {
+const Product_card = ({ product }) => {
+    const { thumbnail, title, ratings, price, oldPrice } = product
     const disPatch = useDispatch()
 
     return (
         <div className="border border-[#ECECEC] rounded-[15px] pb-[29px]">
             <div>
-                <Image width={296} height={271} src={image} alt="image" />
+                <Image width={296} height={271} src={thumbnail} alt="image" />
             </div>
             <div className="px-[21px]">
                 <p className="text-[15px] font-medium leading-6 text-[#2B2B2D] tracking-common pb-[10px]">{title}</p>
@@ -23,7 +24,7 @@ const Product_card = ({ image, title, ratings, price, oldPrice }) => {
                         <p className="font-bold text-[18px] leading-[24px] text-[#3BB77E]">${price}</p>
                         <del className="font-bold text-[14px] leading-[24px] text-[#ADADAD]">${oldPrice}</del>
                     </div>
-                    <button onClick={() => disPatch(addToCart({ image, title, ratings, price }))} className="bg-[#F53E32] py-[13px] px-[20px] rounded-[4px] text-white text-[14px] font-bold leading-[24px] flex items-center gap-1 cursor-pointer">
+                    <button onClick={() => disPatch(addToCart(product))} className="bg-[#F53E32] py-[13px] px-[20px] rounded-[4px] text-white text-[14px] font-bold leading-[24px] flex items-center gap-1 cursor-pointer">
                         <FaOpencart className="text-white" />
                         Add
                     </button>

@@ -5,13 +5,17 @@ import { IoPersonOutline } from "react-icons/io5";
 import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import mainLogo from "../../assets/mainLogo.svg"
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
-    const { item } = useSelector((state) => state.cart)
-    console.log(item);
-    
+    const items = useSelector(state => state.cart);
+    const [cartCount, setCartCount] = useState(0);
+
+    useEffect(() => {
+        setCartCount(items.length);
+    }, [items]);
 
     return (
         <nav className='py-3 sm:py-4 lg:py-5'>
@@ -45,8 +49,8 @@ const Navbar = () => {
                             </button>
                         </div>
                     </div>
-                    <div className='flex items-center gap-3 sm:gap-4 lg:gap-6'>
 
+                    <div className='flex items-center gap-3 sm:gap-4 lg:gap-6'>
                         <div className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200'>
                             <IoPersonOutline className='text-lg sm:text-xl' />
                             <p className='text-xs sm:text-sm font-medium'>Account</p>
@@ -58,7 +62,7 @@ const Navbar = () => {
                         <Link href={"/cart"} className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200 relative'>
                             <MdOutlineShoppingCart className='text-lg sm:text-xl' />
                             <p className='text-xs sm:text-sm font-medium'>Cart</p>
-                            <span>{item.length}</span>
+                            <span>{cartCount}</span>
                         </Link>
                     </div>
                 </div>
