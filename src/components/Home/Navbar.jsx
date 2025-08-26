@@ -22,7 +22,7 @@ const Navbar = () => {
             <div className="container">
                 <div className='flex flex-col lg:flex-row items-center justify-between gap-y-3 sm:gap-y-4'>
                     <div className='flex flex-col lg:flex-row items-center gap-3 sm:gap-4 lg:gap-6 w-full lg:w-auto'>
-                        <div className='flex items-center gap-2 sm:gap-3 flex-shrink-0'>
+                        <Link href={"/"} className='flex items-center gap-2 sm:gap-3 flex-shrink-0'>
                             <Image
                                 src={mainLogo}
                                 alt='Foodzy logo'
@@ -34,7 +34,7 @@ const Navbar = () => {
                                 <p className='text-lg sm:text-xl font-black tracking-wide'>Foodzy</p>
                                 <p className='text-xs text-gray-500 hidden sm:block'>A Treasure of Tastes</p>
                             </div>
-                        </div>
+                        </Link>
                         <div className='flex w-full sm:w-[350px] md:w-[400px] lg:w-[500px] xl:w-[600px] max-w-2xl'>
                             <input
                                 className='flex-grow border border-[#64B496] rounded-l-md px-3 sm:px-4 py-2 outline-none text-sm placeholder:text-gray-500 placeholder:text-xs sm:placeholder:text-sm'
