@@ -2,9 +2,10 @@ import Image from "next/image";
 import { FaShoppingCart, FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/features/cartSlice";
+import Link from "next/link";
 
 const ProductCard = ({ product }) => {
-    const { thumbnail, title, ratings, price, oldPrice } = product;
+    const { thumbnail, title, ratings, price, oldPrice, id } = product;
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {
@@ -14,13 +15,15 @@ const ProductCard = ({ product }) => {
     return (
         <div className="group border border-gray-200 rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-300">
             <div className="relative aspect-square overflow-hidden">
-                <Image
-                    src={thumbnail}
-                    alt={title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
+                <Link href={`/details/${id}`}>
+                    <Image
+                        src={thumbnail}
+                        alt={title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                </Link>
             </div>
             <div className="p-4 sm:p-5 lg:p-6">
                 <h3 className="text-sm sm:text-base font-medium text-gray-800 leading-tight mb-3 line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem]">
