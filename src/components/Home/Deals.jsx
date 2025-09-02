@@ -27,7 +27,7 @@ const Deals = () => {
 }
 
 const DealsCard = ({ allProduct }) => {
-    const { thumbnail, title, price, ratings, discountPercentage,id } = allProduct;
+    const { thumbnail, title, price, rating, discountPercentage,id } = allProduct;
     const dispatch = useDispatch()
     const handleAddtoCart = () => {
         dispatch(addToCart(allProduct))
@@ -57,7 +57,7 @@ const DealsCard = ({ allProduct }) => {
                 <div className="flex items-center gap-2 mb-3">
                     <FaStar className="text-[#fdc040] text-sm" />
                     <span className="text-xs lg:text-sm text-[#B6B6B6]">
-                        ({ratings})
+                        ({rating})
                     </span>
                 </div>
 

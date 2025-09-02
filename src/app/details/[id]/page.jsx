@@ -1,6 +1,5 @@
 "use client"
 import ComonHeader from '@/components/ComonHeader'
-import product_image from "../../../assets/product_Image.png"
 import Image from 'next/image'
 import { FaStar } from 'react-icons/fa'
 import { useParams } from 'next/navigation'
@@ -9,101 +8,182 @@ import { productContext } from '@/context/productContext'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '@/features/cartSlice'
 
-const page = () => {
+const ProductDetailsPage = () => {
     const { id } = useParams()
     const { products } = useContext(productContext)
-    const detaislProduct = products.filter((p) => p.id === Number(id))
     const dispatch = useDispatch()
-    const image = detaislProduct.flatMap((item) => item.images)
-    console.log(image)
+
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+
+    const product = products.find((p) => p.id === Number(id))
+
+    if (!product) {
+        return (
+            <>
+                <ComonHeader link="/" pageName="Product" title="Product" />
+                <div className="container pt-[100px] text-center">
+                    <p className="text-lg text-gray-600">Product not found</p>
+                </div>
+            </>
+        )
+    }
+
+    const {
+        id: productId,
+        thumbnail,
+        images = [],
+        title,
+        description,
+        rating,
+        brand,
+        stock,
+        weight,
+        availabilityStatus,
+        warrantyInformation,
+        discountPercentage,
+        price
+    } = product
+
+    const allImages = [thumbnail, ...images].filter(Boolean)
+    const currentImage = allImages[selectedImageIndex] || thumbnail
+
+    const handleAddToCart = () => {
+        dispatch(addToCart(product))
+    }
 
     return (
         <>
-            <ComonHeader link={"/"} pageName={"Product"} title={"Product"} />
+            <ComonHeader link="/" pageName="Product" title="Product" />
             <section>
-                <div className="container pt-[100px]">
-                    {detaislProduct.map((product) => {
-                        const { id, thumbnail, title, description, rating, brand, stock, weight, availabilityStatus, warrantyInformation, discountPercentage, price } = product
-                        return (
-                            <div key={id} className='grid grid-cols-2 gap-9'>
-                                <div>
-                                    <div className='bg-[#F7F7F8] border border-[#E9E9E9] rounded-[5px] overflow-hidden flex items-center justify-center'>
-                                        <Image src={thumbnail} alt='image' width={469} height={469} />
-                                    </div>
-                                    <div className='flex items-center gap-3 pt-[15px]'>
-                                        {
-                                            image.map((im, index) => {
-                                                return (
-                                                    <div key={index} className='bg-[#f7f7f8] border border-[#E9E9E9] rounded-[5px] overflow-hidden'>
-                                                        <Image src={im} alt='image' width={83} height={83} />
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                        {/* <div className='bg-[#f7f7f8] border border-[#E9E9E9] rounded-[5px] overflow-hidden'>
-                                            <Image src={thumbnail} alt='image' width={83} height={83} />
-                                        </div>
-                                        <div className='bg-[#f7f7f8] border border-[#E9E9E9] rounded-[5px] overflow-hidden'>
-                                            <Image src={thumbnail} alt='image' width={83} height={83} />
-                                        </div>
-                                        <div className='bg-[#f7f7f8] border border-[#E9E9E9] rounded-[5px] overflow-hidden'>
-                                            <Image src={thumbnail} alt='image' width={83} height={83} />
-                                        </div>
-                                        <div className='bg-[#f7f7f8] border border-[#E9E9E9] rounded-[5px] overflow-hidden'>
-                                            <Image src={thumbnail} alt='image' width={83} height={83} />
-                                        </div> */}
-                                    </div>
+                <div className="container px-4 pt-[60px] md:pt-[100px]">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
+
+                        <div className="space-y-4">
+
+                            <div className="bg-[#F7F7F8] border border-[#E9E9E9] rounded-lg overflow-hidden aspect-square flex items-center justify-center">
+                                <Image
+                                    src={currentImage}
+                                    alt={title}
+                                    width={500}
+                                    height={500}
+                                    className="object-contain w-full h-full max-w-[400px] max-h-[400px]"
+                                    priority
+                                />
+                            </div>
+
+                            {allImages.length > 1 && (
+                                <div className="flex gap-3 overflow-x-auto pb-2">
+                                    {allImages.map((image, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setSelectedImageIndex(index)}
+                                            className={`flex-shrink-0 bg-[#f7f7f8] border rounded-lg overflow-hidden transition-all duration-200 ${selectedImageIndex === index
+                                                    ? 'border-[#F53E32] ring-2 ring-[#F53E32]/20'
+                                                    : 'border-[#E9E9E9] hover:border-gray-300'
+                                                }`}
+                                        >
+                                            <Image
+                                                src={image}
+                                                alt={`${title} view ${index + 1}`}
+                                                width={80}
+                                                height={80}
+                                                className="object-contain w-20 h-20"
+                                            />
+                                        </button>
+                                    ))}
                                 </div>
-                                <div>
-                                    <h2 className='text-[22px] leading-[33px] tracking-common text-[#2B2B2D] pb-[17px]'>{title}</h2>
-                                    <p className='text-[14px] leading-[24px] tracking-common text-[#7A7A7A] pb-[23px]'>{description}</p>
-                                    <hr className='text-[#E9E9E9] pb-[24px]' />
-                                    <div className='pb-[26px] flex items-center gap-[10px]'>
-                                        <FaStar className='text-[#F5885F]' />
-                                        <p className='text-[15px] leading-[26px]'>( {rating} Review )</p>
-                                    </div>
-                                    <div className="grid grid-cols-2 gap-y-3 text-gray-700">
-                                        <span className="font-semibold">Brand</span>
-                                        <span>: {brand}</span>
+                            )}
+                        </div>
 
-                                        <span className="font-semibold">stock</span>
-                                        <span>: {stock}</span>
+                        <div className="space-y-6">
+                            <div>
+                                <h1 className="text-xl md:text-2xl lg:text-3xl font-medium leading-tight text-[#2B2B2D] mb-4">
+                                    {title}
+                                </h1>
+                                <p className="text-sm md:text-base leading-relaxed text-[#7A7A7A] mb-6">
+                                    {description}
+                                </p>
+                                <hr className="border-[#E9E9E9] mb-6" />
+                            </div>
 
-                                        <span className="font-semibold">weight</span>
-                                        <span>: {weight}</span>
+                            <div className="flex items-center gap-2 mb-6">
+                                <FaStar className="text-[#F5885F] w-4 h-4" />
+                                <span className="text-sm md:text-base text-gray-700">
+                                    ({rating} Rating)
+                                </span>
+                            </div>
 
-                                        <span className="font-semibold">availabilityStatus</span>
-                                        <span>: {availabilityStatus}</span>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm md:text-base">
+                                <div className="flex justify-between sm:block">
+                                    <span className="font-semibold text-gray-800">Brand</span>
+                                    <span className="sm:block text-gray-600">: {brand}</span>
+                                </div>
 
-                                        <span className="font-semibold">warrantyInformation</span>
-                                        <span>: {warrantyInformation}</span>
-                                    </div>
+                                <div className="flex justify-between sm:block">
+                                    <span className="font-semibold text-gray-800">Stock</span>
+                                    <span className="sm:block text-gray-600">: {stock}</span>
+                                </div>
 
-                                    <div className='flex items-center gap-3 pt-[38px]'>
-                                        <big className='text-[#F53E32] text-[24px] font-semibold leading-[28px] tracking-common'>${price}</big>
-                                        <del className='text-base text-[#7A7A7A] tracking-common'>${discountPercentage}</del>
-                                    </div>
+                                <div className="flex justify-between sm:block">
+                                    <span className="font-semibold text-gray-800">Weight</span>
+                                    <span className="sm:block text-gray-600">: {weight}kg</span>
+                                </div>
 
-                                    <div className='flex items-center gap-[10px] pt-[22px]'>
-                                        <span className='text-base font-medium leading-[24px] tracking-common'>Size/Weight :</span>
-                                        <div className='flex items-center gap-1'>
-                                            <span className='active text-[12px] text-[#777777] border border-[#E9E9E9] tracking-common rounded-[5px] px-[11px] py-[3px]'>50kg</span>
-                                            <span className='text-[12px] text-[#777777] border border-[#E9E9E9] tracking-common rounded-[5px] px-[11px] py-[3px]'>80kg</span>
-                                            <span className='text-[12px] text-[#777777] border border-[#E9E9E9] tracking-common rounded-[5px] px-[11px] py-[3px]'>120kg</span>
-                                            <span className='text-[12px] text-[#777777] border border-[#E9E9E9] tracking-common rounded-[5px] px-[11px] py-[3px]'>200kg</span>
-                                        </div>
-                                    </div>
-                                    <div className='pt-[22px]'>
-                                        <button onClick={() => dispatch(addToCart(product))} className='bg-[#F53E32] cursor-pointer rounded-[5px] text-white font-bold text-[14px] leading-[16px] py-3 px-[23px]'>Add to cart</button>
-                                    </div>
+                                <div className="flex justify-between sm:block">
+                                    <span className="font-semibold text-gray-800">Availability</span>
+                                    <span className="sm:block text-gray-600">: {availabilityStatus}</span>
+                                </div>
+
+                                <div className="flex justify-between sm:block sm:col-span-2">
+                                    <span className="font-semibold text-gray-800">Warranty</span>
+                                    <span className="sm:block text-gray-600 sm:max-w-md">: {warrantyInformation}</span>
                                 </div>
                             </div>
-                        )
-                    })}
+
+                            <div className="flex items-center gap-3 py-4">
+                                <span className="text-[#F53E32] text-2xl md:text-3xl font-bold">
+                                    ${price}
+                                </span>
+                                {discountPercentage > 0 && (
+                                    <span className="text-base md:text-lg text-[#7A7A7A] line-through">
+                                        ${(price / (1 - discountPercentage / 100)).toFixed(2)}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="space-y-3">
+                                <span className="text-base font-medium text-gray-800">
+                                    Size/Weight Options:
+                                </span>
+                                <div className="flex flex-wrap gap-2">
+                                    {['50kg', '80kg', '120kg', '200kg'].map((size, index) => (
+                                        <button
+                                            key={index}
+                                            className={`text-xs md:text-sm px-3 py-2 border border-[#E9E9E9] rounded-md transition-all duration-200 hover:border-[#F53E32] hover:bg-[#F53E32]/5 ${index === 0
+                                                    ? 'bg-[#F53E32] text-white border-[#F53E32]'
+                                                    : 'text-[#777777] bg-white'
+                                                }`}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="pt-4">
+                                <button
+                                    onClick={handleAddToCart}
+                                    className="w-full sm:w-auto bg-[#F53E32] hover:bg-[#E02D21] active:bg-[#D12B1E] transition-colors duration-200 text-white font-bold text-sm md:text-base py-3 px-6 md:px-8 rounded-lg shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {stock === 0 ? 'Out of Stock' : 'Add to Cart'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </>
     )
 }
 
-export default page
+export default ProductDetailsPage
