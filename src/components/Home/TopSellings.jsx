@@ -1,6 +1,7 @@
 "use client"
 import { productContext } from '@/context/productContext'
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { useContext } from 'react'
 import { FaStar } from 'react-icons/fa'
 
@@ -16,6 +17,7 @@ const TopSellings = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
                     {products?.slice(0, 12).map((product) => (
                         <TopSellingCard
+                            id = {product.id}
                             key={product.id}
                             image={product.thumbnail}
                             price={product.price}
@@ -30,14 +32,15 @@ const TopSellings = () => {
     )
 }
 
-const TopSellingCard = ({ image, title, rating, price, discountPercentage }) => {
+const TopSellingCard = ({ image, title, rating, price, discountPercentage, id }) => {
 
     const originalPrice = discountPercentage
         ? (price / (1 - discountPercentage / 100)).toFixed(2)
         : null
+    console.log(id)
 
     return (
-        <div className="w-full max-w-sm mx-auto">
+        <Link href={`/details/${id}`} className="w-full max-w-sm mx-auto">
             <div className="grid grid-cols-[100px_1fr] sm:grid-cols-[110px_1fr] items-center gap-3 p-3 hover:shadow-md transition-shadow rounded-lg">
 
                 <div className="rounded-[10px] overflow-hidden bg-[#f7f7f7] aspect-square relative">
@@ -75,7 +78,7 @@ const TopSellingCard = ({ image, title, rating, price, discountPercentage }) => 
                     </div>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

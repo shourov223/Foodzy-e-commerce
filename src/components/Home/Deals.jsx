@@ -2,6 +2,7 @@
 import { productContext } from '@/context/productContext'
 import { addToCart } from '@/features/cartSlice'
 import Image from 'next/image'
+import Link from 'next/link'
 import React, { useContext } from 'react'
 import { FaOpencart, FaStar } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
@@ -26,7 +27,7 @@ const Deals = () => {
 }
 
 const DealsCard = ({ allProduct }) => {
-    const { thumbnail, title, price, ratings, discountPercentage } = allProduct;
+    const { thumbnail, title, price, ratings, discountPercentage,id } = allProduct;
     const dispatch = useDispatch()
     const handleAddtoCart = () => {
         dispatch(addToCart(allProduct))
@@ -36,7 +37,7 @@ const DealsCard = ({ allProduct }) => {
         : null
 
     return (
-        <div className="w-full max-w-sm mx-auto rounded-[15px] overflow-hidden">
+        <Link href={`/details/${id}`} className="w-full max-w-sm mx-auto rounded-[15px] overflow-hidden">
 
             <div className="bg-[#f7f7f7] aspect-square relative">
                 <Image
@@ -82,7 +83,7 @@ const DealsCard = ({ allProduct }) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

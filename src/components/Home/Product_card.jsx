@@ -5,7 +5,8 @@ import { addToCart } from "@/features/cartSlice";
 import Link from "next/link";
 
 const ProductCard = ({ product }) => {
-    const { thumbnail, title, ratings, price, oldPrice, id } = product;
+    const { thumbnail, title, rating, price, oldPrice, id } = product;
+    console.log(product)
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {
@@ -26,15 +27,17 @@ const ProductCard = ({ product }) => {
                 </Link>
             </div>
             <div className="p-4 sm:p-5 lg:p-6">
-                <h3 className="text-sm sm:text-base font-medium text-gray-800 leading-tight mb-3 line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem]">
-                    {title}
-                </h3>
+                <Link href={`/details/${id}`}>
+                    <h3 className="text-sm sm:text-base font-medium text-gray-800 leading-tight mb-3 line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem]">
+                        {title}
+                    </h3>
+                </Link>
                 <div className="flex items-center gap-2 mb-4">
                     <div className="flex items-center">
                         <FaStar className="text-amber-400 text-sm" />
                     </div>
                     <span className="text-gray-500 text-xs sm:text-sm">
-                        ({ratings})
+                        ({rating})
                     </span>
                 </div>
                 <div className="flex items-center justify-between">

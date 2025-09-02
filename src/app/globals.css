@@ -17,3 +17,9 @@
 @theme {
   --tracking-common: 0.48px;
 }
+
+span.active{
+  background-color: #F53E32;
+  border: none;
+  color: white;
+}
