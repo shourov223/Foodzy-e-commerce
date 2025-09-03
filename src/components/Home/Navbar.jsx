@@ -7,7 +7,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import mainLogo from "../../assets/mainLogo.svg"
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Navbar = () => {
     const items = useSelector(state => state.cart);
@@ -18,7 +18,7 @@ const Navbar = () => {
     }, [items]);
 
     return (
-        <nav className='py-3 sm:py-4 lg:py-5'>
+        <nav className='py-3 sm:py-4 lg:py-5 fixed w-full bg-white z-50'>
             <div className="container">
                 <div className='flex flex-col lg:flex-row items-center justify-between gap-y-3 sm:gap-y-4'>
                     <div className='flex flex-col lg:flex-row items-center gap-3 sm:gap-4 lg:gap-6 w-full lg:w-auto'>
