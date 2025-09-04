@@ -1,12 +1,13 @@
 "use client"
 import ComonHeader from '@/components/ComonHeader'
 import Image from 'next/image'
-import { FaStar } from 'react-icons/fa'
+import { FaRegHeart, FaStar } from 'react-icons/fa'
 import { useParams } from 'next/navigation'
 import { useContext, useState } from 'react'
 import { productContext } from '@/context/productContext'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '@/features/cartSlice'
+import PopularProducts from '@/components/Home/Popular_product'
 
 const ProductDetailsPage = () => {
     const { id } = useParams()
@@ -170,16 +171,20 @@ const ProductDetailsPage = () => {
                                 </div>
                             </div>
 
-                            <div className="pt-4">
+                            <div className="pt-4 flex items-center gap-[15px]">
                                 <button
                                     onClick={handleAddToCart}
                                     className="w-full sm:w-auto bg-[#F53E32] hover:bg-[#E02D21] active:bg-[#D12B1E] transition-colors duration-200 text-white font-bold text-sm md:text-base py-3 px-6 md:px-8 rounded-lg shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {stock === 0 ? 'Out of Stock' : 'Add to Cart'}
                                 </button>
+                                <button className='p-3 rounded-[5px] border border-black flex items-center justify-center cursor-pointer'>
+                                    <FaRegHeart/>
+                                </button>
                             </div>
                         </div>
                     </div>
+                    <PopularProducts/>
                 </div>
             </section>
         </>

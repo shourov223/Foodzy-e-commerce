@@ -7,7 +7,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import mainLogo from "../../assets/mainLogo.svg"
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect,useState } from 'react';
 
 const Navbar = () => {
     const items = useSelector(state => state.cart);
@@ -18,7 +18,7 @@ const Navbar = () => {
     }, [items]);
 
     return (
-        <nav className='py-3 sm:py-4 lg:py-5 fixed w-full bg-white z-50'>
+        <nav className='py-3 sm:py-4 lg:py-5 bg-white'>
             <div className="container">
                 <div className='flex flex-col lg:flex-row items-center justify-between gap-y-3 sm:gap-y-4'>
                     <div className='flex flex-col lg:flex-row items-center gap-3 sm:gap-4 lg:gap-6 w-full lg:w-auto'>
@@ -62,7 +62,7 @@ const Navbar = () => {
                         <Link href={"/cart"} className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200 relative'>
                             <MdOutlineShoppingCart className='text-lg sm:text-xl' />
                             <p className='text-xs sm:text-sm font-medium'>Cart</p>
-                            <span>{cartCount}</span>
+                            {cartCount && <span className='absolute top-[-15px] left-[-10px] size-[20px] rounded-full bg-[#F53E32] text-white flex items-center justify-center'>{cartCount}</span>}
                         </Link>
                     </div>
                 </div>
