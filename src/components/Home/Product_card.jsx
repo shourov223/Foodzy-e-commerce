@@ -6,7 +6,6 @@ import Link from "next/link";
 
 const ProductCard = ({ product }) => {
     const { thumbnail, title, rating, price, oldPrice, id } = product;
-    console.log(product)
     const dispatch = useDispatch();
 
     const handleAddToCart = () => {

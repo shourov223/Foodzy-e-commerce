@@ -7,15 +7,20 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import mainLogo from "../../assets/mainLogo.svg"
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const Navbar = () => {
     const items = useSelector(state => state.cart);
-    const [cartCount, setCartCount] = useState(0);
+    const { wishlist } = useSelector(state => state);
+
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setCartCount(items.length);
-    }, [items]);
+        setMounted(true);
+    }, []);
+
+    const cartCount = mounted ? items.length : 0;
+    const wishlistCount = mounted ? wishlist.length : 0;
 
     return (
         <nav className='py-3 sm:py-4 lg:py-5 bg-white'>
@@ -49,20 +54,30 @@ const Navbar = () => {
                             </button>
                         </div>
                     </div>
-
                     <div className='flex items-center gap-3 sm:gap-4 lg:gap-6'>
                         <div className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200'>
                             <IoPersonOutline className='text-lg sm:text-xl' />
                             <p className='text-xs sm:text-sm font-medium'>Account</p>
                         </div>
-                        <div className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#F53E32] transition-colors duration-200'>
+                        <Link href={"/wishlist"} className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#F53E32] transition-colors duration-200 relative'>
                             <FaRegHeart className='text-lg sm:text-xl' />
                             <p className='text-xs sm:text-sm font-medium'>Wishlist</p>
-                        </div>
+                            {
+                                wishlistCount > 0 && (
+                                    <span className='absolute top-[-15px] left-[-10px] size-[20px] rounded-full bg-[#F53E32] text-white flex items-center justify-center'>
+                                        {wishlistCount}
+                                    </span>
+                                )
+                            }
+                        </Link>
                         <Link href={"/cart"} className='flex flex-col sm:flex-row items-center gap-1 sm:gap-2 cursor-pointer hover:text-[#64B496] transition-colors duration-200 relative'>
                             <MdOutlineShoppingCart className='text-lg sm:text-xl' />
                             <p className='text-xs sm:text-sm font-medium'>Cart</p>
-                            {cartCount && <span className='absolute top-[-15px] left-[-10px] size-[20px] rounded-full bg-[#F53E32] text-white flex items-center justify-center'>{cartCount}</span>}
+                            {cartCount > 0 && (
+                                <span className='absolute top-[-15px] left-[-10px] size-[20px] rounded-full bg-[#F53E32] text-white flex items-center justify-center'>
+                                    {cartCount}
+                                </span>
+                            )}
                         </Link>
                     </div>
                 </div>

@@ -8,12 +8,14 @@ import { productContext } from '@/context/productContext'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '@/features/cartSlice'
 import PopularProducts from '@/components/Home/Popular_product'
+import { toggleWishlist } from '@/features/wishlistSlice'
+import { addToWishlist } from '@/features/wishlistSlice'
 
 const ProductDetailsPage = () => {
     const { id } = useParams()
     const { products } = useContext(productContext)
     const dispatch = useDispatch()
-
+    const [wish, setWish] = useState(false)
     const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
     const product = products.find((p) => p.id === Number(id))
@@ -52,6 +54,10 @@ const ProductDetailsPage = () => {
         dispatch(addToCart(product))
     }
 
+    const handelWishStyle = () => {
+        setWish(true)
+    }
+
     return (
         <>
             <ComonHeader link="/" pageName="Product" title="Product" />
@@ -79,8 +85,8 @@ const ProductDetailsPage = () => {
                                             key={index}
                                             onClick={() => setSelectedImageIndex(index)}
                                             className={`flex-shrink-0 bg-[#f7f7f8] border rounded-lg overflow-hidden transition-all duration-200 ${selectedImageIndex === index
-                                                    ? 'border-[#F53E32] ring-2 ring-[#F53E32]/20'
-                                                    : 'border-[#E9E9E9] hover:border-gray-300'
+                                                ? 'border-[#F53E32] ring-2 ring-[#F53E32]/20'
+                                                : 'border-[#E9E9E9] hover:border-gray-300'
                                                 }`}
                                         >
                                             <Image
@@ -161,8 +167,8 @@ const ProductDetailsPage = () => {
                                         <button
                                             key={index}
                                             className={`text-xs md:text-sm px-3 py-2 border border-[#E9E9E9] rounded-md transition-all duration-200 hover:border-[#F53E32] hover:bg-[#F53E32]/5 ${index === 0
-                                                    ? 'bg-[#F53E32] text-white border-[#F53E32]'
-                                                    : 'text-[#777777] bg-white'
+                                                ? 'bg-[#F53E32] text-white border-[#F53E32]'
+                                                : 'text-[#777777] bg-white'
                                                 }`}
                                         >
                                             {size}
@@ -178,13 +184,17 @@ const ProductDetailsPage = () => {
                                 >
                                     {stock === 0 ? 'Out of Stock' : 'Add to Cart'}
                                 </button>
-                                <button className='p-3 rounded-[5px] border border-black flex items-center justify-center cursor-pointer'>
-                                    <FaRegHeart/>
+                                <button
+                                    onClick={() => {
+                                        dispatch(addToWishlist(product))
+                                        handelWishStyle()
+                                    }} className={`p-3 rounded-[5px] border ${wish? 'border-red-500' : "border-black"} flex items-center justify-center cursor-pointer`}>
+                                    <FaRegHeart className={`${wish ? 'text-red-500' : 'text-black'}`} />
                                 </button>
                             </div>
                         </div>
                     </div>
-                    <PopularProducts/>
+                    <PopularProducts />
                 </div>
             </section>
         </>
