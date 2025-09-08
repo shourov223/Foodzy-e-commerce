@@ -280,7 +280,7 @@ const EmptyCart = () => {
           Looks like you haven't added any items to your cart yet.
         </p>
         <Link
-          href="/"
+          href="/allProducts"
           className="inline-block bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-md font-semibold transition-colors"
         >
           Continue Shopping

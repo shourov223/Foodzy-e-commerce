@@ -6,6 +6,8 @@ export const productContext = createContext()
 
 const ProductProvider = ({ children }) => {
     const [products, setProducts] = useState([])
+    const [categories, setCategories] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState("all")
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
@@ -21,6 +23,10 @@ const ProductProvider = ({ children }) => {
 
                 const data = await response.json()
                 setProducts(data.products || [])
+
+                const uniqueCategories = ["all", ...new Set(data.products.map(item => item.category))]
+                setCategories(uniqueCategories)
+
             } catch (err) {
                 setError(err.message)
             } finally {
@@ -31,7 +37,7 @@ const ProductProvider = ({ children }) => {
         fetchProducts()
     }, [])
     return (
-        <productContext.Provider value={{ products, setProducts, error, setError, loading, setLoading }}>
+        <productContext.Provider value={{ products, setProducts, error, setError, loading, setLoading, categories, setCategories, selectedCategory, setSelectedCategory }}>
             {children}
         </productContext.Provider>
     )
