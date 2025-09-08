@@ -2,6 +2,7 @@
 import { useContext } from "react"
 import Product_card from "./Product_card"
 import { productContext } from "@/context/productContext"
+import Link from "next/link"
 
 const PopularProducts = () => {
     const { error, loading, products } = useContext(productContext);
@@ -46,6 +47,9 @@ const PopularProducts = () => {
                             />
                         </div>
                     ))}
+                </div>
+                <div className="mt-[30px] flex items-center justify-center">
+                    <Link href={"/"} className="py-[10px] px-[20px] rounded-[5px] bg-red-500 text-bases text-white font-bold" >View All Product</Link>
                 </div>
             </div>
         </section>
