@@ -49,7 +49,7 @@ const PopularProducts = () => {
                     ))}
                 </div>
                 <div className="mt-[30px] flex items-center justify-center">
-                    <Link href={"/"} className="py-[10px] px-[20px] rounded-[5px] bg-red-500 text-bases text-white font-bold" >View All Product</Link>
+                    <Link href={"/allProducts"} className="py-[10px] px-[20px] rounded-[5px] bg-red-500 text-bases text-white font-bold" >View All Product</Link>
                 </div>
             </div>
         </section>
