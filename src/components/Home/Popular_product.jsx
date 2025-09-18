@@ -38,7 +38,7 @@ const PopularProducts = () => {
                     Popular Products
                 </h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 lg:gap-[25px]">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 lg:gap-[25px]">
                     {products.slice(0, 10).map((item) => (
                         <div key={item.id} className="w-full">
                             <Product_card
