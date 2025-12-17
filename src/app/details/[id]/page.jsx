@@ -1,15 +1,15 @@
 "use client"
 import ComonHeader from '@/components/ComonHeader'
 import Image from 'next/image'
-import { FaRegHeart, FaStar } from 'react-icons/fa'
+import { FaCheck, FaRegHeart, FaStar } from 'react-icons/fa'
 import { useParams } from 'next/navigation'
 import { useContext, useState } from 'react'
 import { productContext } from '@/context/productContext'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '@/features/cartSlice'
 import PopularProducts from '@/components/Home/Popular_product'
-import { toggleWishlist } from '@/features/wishlistSlice'
 import { addToWishlist } from '@/features/wishlistSlice'
+import { toast, ToastContainer } from 'react-toastify'
 
 const ProductDetailsPage = () => {
     const { id } = useParams()
@@ -17,6 +17,7 @@ const ProductDetailsPage = () => {
     const dispatch = useDispatch()
     const [wish, setWish] = useState(false)
     const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+    const [btnindx, setBtnindx] = useState(0)
 
     const product = products.find((p) => p.id === Number(id))
 
@@ -51,7 +52,8 @@ const ProductDetailsPage = () => {
     const currentImage = allImages[selectedImageIndex] || thumbnail
 
     const handleAddToCart = () => {
-        dispatch(addToCart(product))
+        dispatch(addToCart(product));
+        toast.success("Product added to your cart")
     }
 
     const handelWishStyle = () => {
@@ -162,11 +164,12 @@ const ProductDetailsPage = () => {
                                 <span className="text-base font-medium text-gray-800">
                                     Size/Weight Options:
                                 </span>
-                                <div className="flex flex-wrap gap-2">
+                                <div className="flex flex-wrap gap-2 pt-3">
                                     {['50kg', '80kg', '120kg', '200kg'].map((size, index) => (
                                         <button
+                                            onClick={() => setBtnindx(index)}
                                             key={index}
-                                            className={`text-xs md:text-sm px-3 py-2 border border-[#E9E9E9] rounded-md transition-all duration-200 hover:border-[#F53E32] hover:bg-[#F53E32]/5 ${index === 0
+                                            className={`text-xs md:text-sm px-3 py-2 border border-[#E9E9E9] rounded-md transition-all duration-200 cursor-pointer ${index === btnindx
                                                 ? 'bg-[#F53E32] text-white border-[#F53E32]'
                                                 : 'text-[#777777] bg-white'
                                                 }`}
@@ -188,14 +191,15 @@ const ProductDetailsPage = () => {
                                     onClick={() => {
                                         dispatch(addToWishlist(product))
                                         handelWishStyle()
-                                    }} className={`p-3 rounded-[5px] border ${wish? 'border-red-500' : "border-black"} flex items-center justify-center cursor-pointer`}>
-                                    <FaRegHeart className={`${wish ? 'text-red-500' : 'text-black'}`} />
+                                    }} className={`p-3 rounded-[5px] border ${wish ? 'border-red-500' : "border-black"} flex items-center justify-center cursor-pointer`}>
+                                    {wish ? <FaCheck className='border-red-500 text-red-500' /> : <FaRegHeart className={'text-black'} />}
                                 </button>
                             </div>
                         </div>
                     </div>
                     <PopularProducts />
                 </div>
+                <ToastContainer />
             </section>
         </>
     )
